@@ -123,6 +123,66 @@ jobs:
           github-token: ${{ secrets.github_token }}
           skip-commit: 'true'
 
+  test-txt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: "./"
+
+      - name: Generate changelog
+        id: changelog
+        uses: ./
+        env:
+          ENV: 'dont-use-git'
+        with:
+          github-token: ${{ secrets.github_token }}
+          version-file: 'test-file.txt'
+          version-path: 'package.version'
+
+  test-txt-new:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: "./"
+
+      - run: touch ./test-file-empty.txt
+
+      - name: Generate changelog
+        id: changelog
+        uses: ./
+        env:
+          ENV: 'dont-use-git'
+        with:
+          github-token: ${{ secrets.github_token }}
+          version-file: 'test-file-new.txt'
+          version-path: 'package.version'
+
+      - run: echo "$(<test-file-new.txt)"
+
+  test-txt-empty:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: "./"
+
+      - name: Generate changelog
+        id: changelog
+        uses: ./
+        env:
+          ENV: 'dont-use-git'
+        with:
+          github-token: ${{ secrets.github_token }}
+          version-file: './test-file-empty.txt'
+          version-path: 'package.version'
+
+      - run: echo "$(<./test-file-empty.txt)"
+
   test-yaml:
     runs-on: ubuntu-latest
     steps:
