@@ -95,7 +95,7 @@ async function run() {
           core.info(`Bumping version to file "${file}" with extension "${fileExtension}"`)
           return handleVersioningByExtension(fileExtension, file, versionPath, recommendation.releaseType)
         }));
-
+        core.info(versioning.length)
         newVersion = versioning[0].newVersion
       }
 
