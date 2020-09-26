@@ -93,7 +93,7 @@ async function run() {
         const versioning = await Promise.all(files.map((file) => {
           const fileExtension = file.split('.').pop()
           core.info(`Bumping version to file "${file}" with extension "${fileExtension}"`)
-          const versioning = await handleVersioningByExtension(fileExtension, file, versionPath, recommendation.releaseType)
+          const versioning = handleVersioningByExtension(fileExtension, file, versionPath, recommendation.releaseType)
           core.info(`${versioning.newVersion}`)
           return versioning
         }));
